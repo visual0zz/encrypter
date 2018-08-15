@@ -5,6 +5,6 @@ import java.security.NoSuchAlgorithmException;
 
 public class MainTest {
     public static void main(String [] args) throws NoSuchAlgorithmException {
-        MessageDigest.getInstance("");
+        System.out.println(HashService.SHA256.getSystemTime());
     }
 }

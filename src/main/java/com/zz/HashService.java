@@ -2,6 +2,7 @@ package com.zz;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 
 public enum HashService {
 
@@ -55,6 +56,10 @@ public enum HashService {
     public String toString() {
         if(this==SHA256)return "SHA-256";
         else return super.toString();
+    }
+    public String getSystemTime(){
+        Date time=new Date();
+        return time.toString();
     }
 }
 
