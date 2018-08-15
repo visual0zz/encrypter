@@ -100,7 +100,7 @@ public enum HashService {
         return result.toString();
     }
 
-    private static class HashResult{
+    static class HashResult{
         byte [] value;
         HashResult(byte[] in){value=in;}
         public String getUpper(){
