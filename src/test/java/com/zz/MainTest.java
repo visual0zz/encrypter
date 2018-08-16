@@ -16,7 +16,7 @@ public class MainTest {
             String str=in.nextLine();
             RandomGenerator random=new RandomGenerator();
             for(byte ch:str.getBytes()){
-                System.out.println(random.getNextPrintableStringWithCertainLength(str.length()));
+                System.out.println(random.getNextString(str.length()));
             }
         }
     }

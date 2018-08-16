@@ -40,25 +40,25 @@ public class RandomGenerator{
         return (char) (getNextByte()+
                         getNextByte()<<8);
     }
-    public char getNextPrintableChar(){
+    public char getNextLetterOrDigit(){
         char character;
         int count=0;
         do {
             count++;
             character=getNextChar();
             //System.out.println(Integer.toString((int)character));//todo delete
-            //if(count>=10) character= '1';// todo reuse
+            if(count>=100) character= '1';// todo reuse
         }while(!Character.isLetterOrDigit(character));
         //if(character!='1')System.out.println(Integer.toString((int)character));//todo delete
         return character;
     }
-    public String getNextPrintableStringWithCertainLength(int length){
+    public String getNextString(int length){
         if(length<0){
             throw new NegativeArraySizeException("字符串长度不能小于0!");
         }
         StringBuilder builder=new StringBuilder();
         for(int i=0;i<length;i++){
-            builder.append(getNextPrintableChar());
+            builder.append(getNextLetterOrDigit());
         }
         return builder.toString();
     }
