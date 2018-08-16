@@ -1,8 +1,14 @@
-package com.zz;
+package com.zz.utils;
 
-import org.junit.Test; 
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.Before; 
-import org.junit.After; 
+import org.junit.After;
+
+import java.security.InvalidParameterException;
+import java.util.Scanner;
+
+import static com.zz.utils.HashService.isEqual;
 
 /** 
 * RandomGenerator Tester. 
@@ -13,8 +19,10 @@ import org.junit.After;
 */ 
 public class RandomGeneratorTest { 
 
+    RandomGenerator generator;
 @Before
-public void before() throws Exception { 
+public void before() throws Exception {
+    generator=new RandomGenerator();
 } 
 
 @After
@@ -28,7 +36,37 @@ public void after() throws Exception {
 */ 
 @Test
 public void testSetSeedSeed() throws Exception { 
-//TODO: Test goes here... 
+//TODO: Test goes here...
+
+        generator.setSeed((byte[]) null);//测试给乱七八糟的种子会不会崩溃
+        generator.getNextByte();
+        generator.getNextByteArray();
+        generator.getNextChar();
+        generator.getNextInt();
+        generator.getNextString(123);
+
+        RandomGenerator generator=new RandomGenerator();
+
+        generator.setSeed((String) null);
+        generator.getNextByte();
+        generator.getNextByteArray();
+        generator.getNextChar();
+        generator.getNextInt();
+        generator.getNextString(123);
+
+    Assert.assertEquals("相同的种子得到了不同的序列",this.generator,generator);
+    Assert.assertEquals(
+            "相同的种子得到了不同的序列",
+            this.generator.getNextString(13),
+            generator.getNextString(13));
+    Assert.assertEquals("相同的种子得到了不同的序列",this.generator.getNextInt(),generator.getNextInt());
+    generator.getNextByte();
+
+    //System.out.println(generator.bytecount);
+    Assert.assertTrue("不同的状态得到了相同的序列",!isEqual(this.generator.getNextByteArray(),generator.getNextByteArray()));
+    //System.out.println(generator.bytecount);
+    Assert.assertNotEquals("不同的状态得到了相同的序列",this.generator,generator);
+    System.out.println(generator);
 } 
 
 /** 

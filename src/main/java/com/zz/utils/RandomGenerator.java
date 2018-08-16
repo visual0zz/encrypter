@@ -1,26 +1,38 @@
 package com.zz.utils;
 
+import java.security.InvalidParameterException;
+
 import static com.zz.utils.HashService.md5;
 
-public class RandomGenerator{
+public final class RandomGenerator{
 
     byte[] state=null;//储存当前的随机数状态
-    public void setSeed(byte[] seed){ state=seed;bytecount=-5;}//负数迫使其第一次输出时重新计算state
-    public void setSeed(String seed){ setSeed(seed.getBytes());}
+    int bytecount;//用于输出byte时计数
+
+
+    public void setSeed(byte[] seed){
+        if(seed==null)seed=new byte[]{};//如果输入null视为空串
+        state=seed;
+        bytecount=-1;//负数迫使其第一次输出时重新计算state
+    }
+    public void setSeed(String seed){
+        if(seed==null)seed="";//如果输入null就当作空串处理
+        setSeed(seed.getBytes());
+    }
     public void setRandomSeed(){setSeed(md5.getRandomHash().getByteArray());}
     public RandomGenerator(){setRandomSeed();}
     public RandomGenerator(String seed){setSeed(seed);}
     public RandomGenerator(byte[] seed){setSeed(seed);}
 
-    int bytecount;//用于输出byte时计数
 
     private void generateNextState(){
-        state=md5.getHash(state).getByteArray();
+
+        state=md5.getHash(new String(state)+Integer.toBinaryString(bytecount)).getByteArray();
     }
 
     public byte[] getNextByteArray(){
         generateNextState();
-        bytecount=-5;
+        bytecount=-1;//标志这个state已经输出过了，如果要get其他的，要出现生成
         return state;
     }
     public byte getNextByte(){//获得伪随机字节
@@ -68,6 +80,37 @@ public class RandomGenerator{
             builder.append(getNextLetterOrDigit());
         }
         return builder.toString();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result=new StringBuilder();
+        result.append("RandomGenerator{ " +
+                "\n  state:[");
+        for(byte b:state){
+            result.append(Byte.toString(b));
+            result.append(' ');
+        }
+        result.append("]" +
+                "\n  bytecount:" +
+                Integer.toString(bytecount));
+        result.append("\n}");
+        return result.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj.getClass()!=this.getClass())return false;
+        RandomGenerator other=(RandomGenerator)obj;
+        if(HashService.isEqual(this.state,other.state) && this.bytecount==other.bytecount)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return (new String(state)+Integer.toBinaryString(bytecount)).hashCode();
     }
 }
 

@@ -1,4 +1,4 @@
-package com.zz;
+package com.zz.utils;
 
 import com.zz.utils.HashService;
 import org.junit.Assert;
