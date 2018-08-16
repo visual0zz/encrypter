@@ -48,13 +48,13 @@ public final class RandomGenerator{
         }
     }
     public char getNextChar(){
-        return (char) (getNextByte()+
+        return (char) (getNextByte()|
                 getNextByte()<<8);
     }
     public int getNextInt(){
-        return  getNextByte()+
-                getNextByte()<<8+
-                getNextByte()<<16+
+        return  getNextByte()|
+                getNextByte()<<8|
+                getNextByte()<<16|
                 getNextByte()<<24
                 ;
     }
@@ -62,15 +62,9 @@ public final class RandomGenerator{
 
     public char getNextLetterOrDigit(){
         char character;
-        int count=0;
-        do {
-            count++;
-            character=getNextChar();
-            //System.out.println(Integer.toString((int)character));//todo delete
-            if(count>20) character= '1';// todo reuse
-        }while(!Character.isLetterOrDigit(character));
-        //if(character!='1')System.out.println(Integer.toString((int)character));//todo delete
-        return character;
+        character=getNextChar();
+        if(Character.isLetterOrDigit(character))return character;
+        return '烫';
     }
     public String getNextString(int length){
         if(length<0){

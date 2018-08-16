@@ -66,7 +66,13 @@ public void testSetSeedSeed() throws Exception {
     Assert.assertTrue("不同的状态得到了相同的序列",!isEqual(this.generator.getNextByteArray(),generator.getNextByteArray()));
     //System.out.println(generator.bytecount);
     Assert.assertNotEquals("不同的状态得到了相同的序列",this.generator,generator);
-    System.out.println(generator);
+    //System.out.println(generator);
+    byte[] example=new byte[]{
+            (byte) 0x26, (byte)0xeb, (byte) 0x3a, (byte)0x52,
+            (byte) 0x4e, (byte)0x5a, (byte) 0x74, (byte)0x5f,
+            (byte) 0xa4, (byte)0x77, (byte) 0xb8, (byte)0xf5,
+            (byte) 0x61, (byte)0x22, (byte) 0xff, (byte)0xc5};
+    Assert.assertTrue(isEqual(generator.state,example));
 } 
 
 /** 
@@ -75,89 +81,27 @@ public void testSetSeedSeed() throws Exception {
 * 
 */ 
 @Test
-public void testSetRandomSeed() throws Exception { 
-//TODO: Test goes here... 
-} 
+public void testSetRandomSeed() throws Exception {
+    generator.setRandomSeed();//测试随机种子
+    generator.getNextString(123);
 
-/** 
-* 
-* Method: getNextByteArray() 
-* 
-*/ 
-@Test
-public void testGetNextByteArray() throws Exception { 
-//TODO: Test goes here... 
-} 
+    RandomGenerator generator2=new RandomGenerator();
+    generator2.getNextString(123);
 
-/** 
-* 
-* Method: getNextByte() 
-* 
-*/ 
-@Test
-public void testGetNextByte() throws Exception { 
-//TODO: Test goes here... 
-} 
+    boolean[] result=new boolean[6];
+    result[0]=this.generator.getNextByteArray()==generator2.getNextByteArray();
+    result[1]=this.generator.getNextChar()==generator2.getNextChar();
+    result[2]=this.generator.getNextLetterOrDigit()==generator2.getNextLetterOrDigit();
+    result[3]= this.generator.getNextString(12).equals(generator2.getNextString(12));
+    result[4]=this.generator.getNextByte()==generator2.getNextByte();
+    result[5]=this.generator.getNextInt()==generator2.getNextInt();
+    int count=0;
+    for(boolean a:result){
+        if(a)count++;
+    }
+    if(count>=2)throw new Exception("随机函数连续发生2次以上碰撞，这个错误如果偶发属于正常，如果多发，随机函数哈希有问题");
 
-/** 
-* 
-* Method: getNextChar() 
-* 
-*/ 
-@Test
-public void testGetNextChar() throws Exception { 
-//TODO: Test goes here... 
-} 
+}
 
-/** 
-* 
-* Method: getNextInt() 
-* 
-*/ 
-@Test
-public void testGetNextInt() throws Exception { 
-//TODO: Test goes here... 
-} 
-
-/** 
-* 
-* Method: getNextLetterOrDigit() 
-* 
-*/ 
-@Test
-public void testGetNextLetterOrDigit() throws Exception { 
-//TODO: Test goes here... 
-} 
-
-/** 
-* 
-* Method: getNextString(int length) 
-* 
-*/ 
-@Test
-public void testGetNextString() throws Exception { 
-//TODO: Test goes here... 
-} 
-
-
-/** 
-* 
-* Method: generateNextState() 
-* 
-*/ 
-@Test
-public void testGenerateNextState() throws Exception { 
-//TODO: Test goes here... 
-/* 
-try { 
-   Method method = RandomGenerator.getClass().getMethod("generateNextState"); 
-   method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
-} catch(NoSuchMethodException e) { 
-} catch(IllegalAccessException e) { 
-} catch(InvocationTargetException e) { 
-} 
-*/ 
-} 
 
 } 
