@@ -1,9 +1,10 @@
 package com.zz;
 
+import com.zz.utils.HashService;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static com.zz.HashService.*;
+import static com.zz.utils.HashService.*;
 
 public class HashServiceTest {
     @Test

@@ -1,5 +1,7 @@
 package com.zz;
 
+import com.zz.utils.RandomGenerator;
+
 import java.util.Scanner;
 
 public class MainTest {

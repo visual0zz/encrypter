@@ -1,6 +1,6 @@
-package com.zz;
+package com.zz.utils;
 
-import static com.zz.HashService.*;
+import static com.zz.utils.HashService.*;
 
 public class RandomGenerator{
 
