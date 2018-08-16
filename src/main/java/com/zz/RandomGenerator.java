@@ -46,8 +46,10 @@ public class RandomGenerator{
         do {
             count++;
             character=getNextChar();
-            if(count>=1000) character= 'a';
-        }while(!Character.isLetter(character));
+            System.out.println(Integer.toString((int)character));//todo delete
+            //if(count>=10) character= '1';// todo reuse
+        }while(!Character.isDigit(character));
+        if(character!='1')System.out.println(Integer.toString((int)character));//todo delete
         return character;
     }
     public String getNextPrintableStringWithCertainLength(int length){
