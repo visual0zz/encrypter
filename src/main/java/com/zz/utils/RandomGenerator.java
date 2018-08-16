@@ -52,29 +52,37 @@ public final class RandomGenerator{
                 getNextByte()<<8);
     }
     public int getNextInt(){
-        return  getNextByte()|
-                getNextByte()<<8|
-                getNextByte()<<16|
-                getNextByte()<<24
+
+        return  byte2int(new byte[]{getNextByte(),getNextByte(),getNextByte(),getNextByte()})
                 ;
     }
 
 
-    public char getNextLetterOrDigit(){
+    private char getNextLetterOrDigit() throws Exception {
         char character;
         character=getNextChar();
         if(Character.isLetterOrDigit(character))return character;
-        return '烫';
+        throw new Exception("得到错误的字符");
     }
     public String getNextString(int length){
         if(length<0){
             throw new NegativeArraySizeException("字符串长度不能小于0!");
         }
-        StringBuilder builder=new StringBuilder();
-        for(int i=0;i<length;i++){
-            builder.append(getNextLetterOrDigit());
+        char[]buf=new char[length*3];//建立缓冲区
+        int index=0;
+        for(int i=0;i<length*3;i++){//获取所需三倍的字符，概率上确保大可能性得到足够的随机字符
+            char tmp;
+            try {
+                tmp=getNextLetterOrDigit();
+                buf[index]=tmp;//如果能执行到这里说明得到了正常的字符。
+                index++;
+            } catch (Exception e){}
+
         }
-        return builder.toString();
+        for(;index<=length;index++){
+            buf[index]='烫';//实在没有足够的字符就随便填一个
+        }
+        return String.copyValueOf(buf,0,length);
     }
 
     @Override
@@ -118,7 +126,7 @@ public final class RandomGenerator{
     }
     private static int byte2int(byte[] res) {
         int targets = (res[0] & 0xff) | ((res[1] << 8) & 0xff00) // '|' 表示按位或
-                | ((res[2] << 24) >>> 8) | (res[3] << 24);
+                | (res[2] <<16) | (res[3] << 24);
         return targets;
     }
     public static byte[] concat(byte[] a, byte[] b) {//数组合并
