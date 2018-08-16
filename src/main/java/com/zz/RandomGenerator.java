@@ -41,14 +41,14 @@ public class RandomGenerator{
                         getNextByte()<<8);
     }
     public char getNextPrintableChar(){
-        char c;
+        char character;
         int count=0;
         do {
             count++;
-            c=getNextChar();
-            if(count>=1000) c= 'a';
-        }while(Character.isLetter(c));
-        return c;
+            character=getNextChar();
+            if(count>=1000) character= 'a';
+        }while(!Character.isLetter(character));
+        return character;
     }
     public String getNextPrintableStringWithCertainLength(int length){
         if(length<0){
