@@ -121,7 +121,7 @@ public final class RandomGenerator{
                 | ((res[2] << 24) >>> 8) | (res[3] << 24);
         return targets;
     }
-    private static byte[] concat(byte[] a, byte[] b) {//数组合并
+    public static byte[] concat(byte[] a, byte[] b) {//数组合并
         final int alen = a.length;
         final int blen = b.length;
         if (alen == 0) {
@@ -130,8 +130,7 @@ public final class RandomGenerator{
         if (blen == 0) {
             return a;
         }
-        final byte[] result = (byte[]) java.lang.reflect.Array.
-                newInstance(a.getClass().getComponentType(), alen + blen);
+        final byte[] result = new byte[alen + blen];
         System.arraycopy(a, 0, result, 0, alen);
         System.arraycopy(b, 0, result, alen, blen);
         return result;
