@@ -38,7 +38,7 @@ public void after() throws Exception {
 public void testSetSeedSeed() throws Exception { 
 //TODO: Test goes here...
 
-        generator.setSeed((byte[]) null);//测试给乱七八糟的种子会不会崩溃
+        generator.setSeed(new byte[]{});//测试给乱七八糟的种子会不会崩溃
         generator.getNextByte();
         generator.getNextByteArray();
         generator.getNextChar();
@@ -47,7 +47,7 @@ public void testSetSeedSeed() throws Exception {
 
         RandomGenerator generator=new RandomGenerator();
 
-        generator.setSeed((String) null);
+        generator.setSeed(new String(""));
         generator.getNextByte();
         generator.getNextByteArray();
         generator.getNextChar();
