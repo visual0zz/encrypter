@@ -1,21 +1,27 @@
 package com.zz.utils;
 
-import static com.zz.utils.HashService.*;
+import static com.zz.utils.HashService.md5;
 
 public class RandomGenerator{
 
     byte[] state=null;//储存当前的随机数状态
-    public void setSeed(String seed){ state=seed.getBytes();}
-    public void setRandomSeed(){state=md5.getRandomHash().getByteArray();}
-    RandomGenerator(){setRandomSeed();bytecount=-5;}//负数迫使其第一次输出时重新计算state
-    RandomGenerator(String seed){setSeed(seed);bytecount=-5;}
+    public void setSeed(byte[] seed){ state=seed;bytecount=-5;}//负数迫使其第一次输出时重新计算state
+    public void setSeed(String seed){ setSeed(seed.getBytes());}
+    public void setRandomSeed(){setSeed(md5.getRandomHash().getByteArray());}
+    public RandomGenerator(){setRandomSeed();}
+    public RandomGenerator(String seed){setSeed(seed);}
+    public RandomGenerator(byte[] seed){setSeed(seed);}
+
     int bytecount;//用于输出byte时计数
-    public static int hash(String source){
-        //todo 要替换成自己的哈希函数
-        return source.hashCode();
-    }
+
     private void generateNextState(){
         state=md5.getHash(state).getByteArray();
+    }
+
+    public byte[] getNextByteArray(){
+        generateNextState();
+        bytecount=-5;
+        return state;
     }
     public byte getNextByte(){//获得伪随机字节
         bytecount++;
@@ -28,6 +34,10 @@ public class RandomGenerator{
             return state[bytecount];
         }
     }
+    public char getNextChar(){
+        return (char) (getNextByte()+
+                getNextByte()<<8);
+    }
     public int getNextInt(){
         return  getNextByte()+
                 getNextByte()<<8+
@@ -36,10 +46,7 @@ public class RandomGenerator{
                 ;
     }
 
-    public char getNextChar(){
-        return (char) (getNextByte()+
-                        getNextByte()<<8);
-    }
+
     public char getNextLetterOrDigit(){
         char character;
         int count=0;
@@ -47,7 +54,7 @@ public class RandomGenerator{
             count++;
             character=getNextChar();
             //System.out.println(Integer.toString((int)character));//todo delete
-            if(count>=100) character= '1';// todo reuse
+            if(count>20) character= '1';// todo reuse
         }while(!Character.isLetterOrDigit(character));
         //if(character!='1')System.out.println(Integer.toString((int)character));//todo delete
         return character;
