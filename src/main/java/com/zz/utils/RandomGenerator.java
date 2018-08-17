@@ -129,7 +129,7 @@ public final class RandomGenerator{
                 | (res[2] <<16) | (res[3] << 24);
         return targets;
     }
-    public static byte[] concat(byte[] a, byte[] b) {//数组合并
+    private static byte[] concat(byte[] a, byte[] b) {//数组合并
         final int alen = a.length;
         final int blen = b.length;
         if (alen == 0) {

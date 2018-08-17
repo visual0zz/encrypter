@@ -41,7 +41,7 @@ public class MainTest {
         Scanner in=new Scanner(System.in);
         while(in.hasNextLine()){
             String str=in.nextLine();
-            RandomGenerator random=new RandomGenerator();
+            RandomGenerator random=new RandomGenerator(str);
             for(byte ch:str.getBytes()){
                 System.out.println(random.getNextString(str.length()));
             }
