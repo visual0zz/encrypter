@@ -28,16 +28,18 @@ public final class FileTreeTravelManager {
         return list;
     }
     private void travelOneLayer(File file,int level_count){
-        if(file.exists()){
-            if(file.isDirectory()){
-                File[] files = file.listFiles();
-                if(files!=null&&files.length>0){
-                    for(File f:files){
-                        if(traveler.travelFolder(level_count,file,list))
-                            travelOneLayer(f,level_count+1);//如果返回true，继续迭代其下内容
+        if(file.exists()){//如果文件存在
+            if(file.isDirectory()){//如果是文件夹
+                if(traveler.shouldTravelIntoFolder(level_count,file)) {
+                    File[] files = file.listFiles();
+                    if (files != null && files.length > 0) {
+                        for (File f : files) {
+                            travelOneLayer(f, level_count + 1);//如果返回true，继续迭代其下内容
+                        }
                     }
                 }
-            }else if(file.isFile()){
+                traveler.travelFolder(level_count, file, list);
+            }else if(file.isFile()){//如果是文件
                 traveler.travelFile(level_count,file,list);
             }
         }
