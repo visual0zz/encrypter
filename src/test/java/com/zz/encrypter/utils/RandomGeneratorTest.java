@@ -1,14 +1,11 @@
-package com.zz.utils;
+package com.zz.encrypter.utils;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before; 
 import org.junit.After;
 
-import java.security.InvalidParameterException;
-import java.util.Scanner;
-
-import static com.zz.utils.HashService.isEqual;
+import static com.zz.encrypter.utils.HashService.isEqual;
 
 /** 
 * RandomGenerator Tester. 

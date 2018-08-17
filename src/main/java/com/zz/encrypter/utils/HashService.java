@@ -1,4 +1,4 @@
-package com.zz.utils;
+package com.zz.encrypter.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

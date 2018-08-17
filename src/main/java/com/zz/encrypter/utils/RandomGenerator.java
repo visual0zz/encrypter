@@ -1,8 +1,4 @@
-package com.zz.utils;
-
-import java.security.InvalidParameterException;
-
-import static com.zz.utils.HashService.md5;
+package com.zz.encrypter.utils;
 
 public final class RandomGenerator{
 
@@ -19,7 +15,7 @@ public final class RandomGenerator{
         if(seed==null)seed="";//如果输入null就当作空串处理
         setSeed(seed.getBytes());
     }
-    public void setRandomSeed(){setSeed(md5.getRandomHash().getByteArray());}
+    public void setRandomSeed(){setSeed(HashService.md5.getRandomHash().getByteArray());}
     public RandomGenerator(){setRandomSeed();}
     public RandomGenerator(String seed){setSeed(seed);}
     public RandomGenerator(byte[] seed){setSeed(seed);}
@@ -28,7 +24,7 @@ public final class RandomGenerator{
     private void generateNextState(){
 
         //state=md5.getHash(new String(state)+Integer.toBinaryString(bytecount)).getByteArray();
-        state=md5.getHash(concat(state,int2byte(bytecount))).getByteArray();
+        state= HashService.md5.getHash(concat(state,int2byte(bytecount))).getByteArray();
     }
 
     public byte[] getNextByteArray(){
