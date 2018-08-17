@@ -1,4 +1,4 @@
-package com.zz.encrypter.utils;
+package com.zz.encrypter.utils.basicwork;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
