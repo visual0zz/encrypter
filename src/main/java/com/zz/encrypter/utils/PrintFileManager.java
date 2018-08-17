@@ -1,4 +1,4 @@
-package com.zz.encrypter.basicwork;
+package com.zz.encrypter.utils;
 
 import javafx.util.Pair;
 

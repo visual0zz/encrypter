@@ -1,5 +1,6 @@
-package com.zz.encrypter.utils;
+package com.zz.encrypter.utils.cryptography;
 
+import com.zz.encrypter.utils.cryptography.HashService;
 import org.junit.Assert;
 import org.junit.Test;
 

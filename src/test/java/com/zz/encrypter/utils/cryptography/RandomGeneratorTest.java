@@ -1,11 +1,12 @@
-package com.zz.encrypter.utils;
+package com.zz.encrypter.utils.cryptography;
 
+import com.zz.encrypter.utils.cryptography.RandomGenerator;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before; 
 import org.junit.After;
 
-import static com.zz.encrypter.utils.HashService.isEqual;
+import static com.zz.encrypter.utils.cryptography.HashService.isEqual;
 
 /** 
 * RandomGenerator Tester. 

@@ -1,4 +1,4 @@
-package com.zz.encrypter.utils;
+package com.zz.encrypter.utils.cryptography;
 
 public final class RandomGenerator{
 

@@ -1,6 +1,6 @@
 package com.zz.encrypter;
 
-import com.zz.encrypter.utils.RandomGenerator;
+import com.zz.encrypter.utils.cryptography.RandomGenerator;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
