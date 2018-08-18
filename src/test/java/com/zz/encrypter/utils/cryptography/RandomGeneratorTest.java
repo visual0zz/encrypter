@@ -73,7 +73,7 @@ public void testSetSeedSeed() throws Exception {
             (byte) 0x51, (byte)0x9b, (byte) 0x8c, (byte)0xfe,
             (byte) 0xd4, (byte)0x19, (byte) 0xba, (byte)0x1c,
             (byte) 0xaf, (byte)0x12, (byte) 0x85, (byte)0xee};
-    //System.out.println(generator);
+    System.out.println(generator);
     Assert.assertTrue(isEqual(generator.state,example));
     //System.out.println(generator.getNextInt());
     Assert.assertTrue(-1419318047==generator.getNextInt());

@@ -20,14 +20,16 @@ public final class RandomGenerator{
     public RandomGenerator(String seed){setSeed(seed);}
     public RandomGenerator(byte[] seed){setSeed(seed);}
 
-
+    /**
+     * 从当前状态得到下一个状态。
+     */
     protected void generateNextState(){
         state= HashService.md5.getHash(concat(state,int2byte(bytecount^0x13768524))).getByteArray();
     }
 
     public byte[] getNextByteArray(){
         generateNextState();
-        bytecount=-5;//标志这个state已经输出过了，如果要get其他的，要出现生成
+        bytecount=-5;//标志这个state已经输出过了，如果要get其他的，要重新生成
         return state;
     }
     public byte getNextByte(){//获得伪随机字节
