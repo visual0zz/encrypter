@@ -4,32 +4,46 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class StreamEncrypter extends OutputStream {
-    public StreamEncrypter(String password,OutputStream stream) {
+    OutputStream target;
+    byte[] passkey;
+    RandomGenerator generator;
+    private StreamEncrypter(byte[] password,OutputStream stream) {
         super();
+        passkey=password;
+        target=stream;
+        generator=new RandomGenerator(password);
     }
+    public static StreamEncrypter getInstance(byte[] password,OutputStream stream){
+        if(password==null||stream==null) return null;
+        return new StreamEncrypter(password,stream);
+    }
+    public static StreamEncrypter getInstance(String password,OutputStream stream){
+        return new StreamEncrypter(password.getBytes(),stream);
+    }
+
 
     @Override
     public void write(int b) throws IOException {
-
+        target.write((b^generator.getNextByte())&0xff);
     }
 
     @Override
     public void write(byte[] b) throws IOException {
-        super.write(b);
-    }
-
-    @Override
-    public void write(byte[] b, int off, int len) throws IOException {
-        super.write(b, off, len);
+        int length=b.length;
+        byte[] tar=new byte[length];
+        for( int i=0;i<length;i++){
+            tar[i]= (byte) (b[i]^(generator.getNextByte()));
+        }
+        target.write(tar);
     }
 
     @Override
     public void flush() throws IOException {
-        super.flush();
+        target.flush();
     }
 
     @Override
     public void close() throws IOException {
-        super.close();
+        target.close();
     }
 }
