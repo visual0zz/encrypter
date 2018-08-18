@@ -3,6 +3,10 @@ package com.zz.encrypter.utils.cryptography;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * 输入流的结构优点复杂，以后再写
+ */
+@Deprecated
 public class InputStreamEncrypter extends InputStream {
     public InputStreamEncrypter() {
         super();
