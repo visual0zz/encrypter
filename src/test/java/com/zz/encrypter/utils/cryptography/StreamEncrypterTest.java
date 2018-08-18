@@ -57,13 +57,12 @@ public void testGetInstanceForPasswordStream() throws Exception {
 
 ////////////////////////////解密
     ByteArrayOutputStream jiemi=new ByteArrayOutputStream();
-    encrypter=StreamEncrypter.getInstance("123456",System.out);
+    encrypter=StreamEncrypter.getInstance("123456",jiemi);
     encrypter.write(result);
 
     ByteArrayInputStream jieguoin= new ByteArrayInputStream(jiemi.toByteArray());
     Scanner in=new Scanner(jieguoin);
-    while(in.hasNext())
-        System.out.println(in.next());
+    while(in.hasNextLine()) System.out.println(in.nextLine());
 }
 
 /** 

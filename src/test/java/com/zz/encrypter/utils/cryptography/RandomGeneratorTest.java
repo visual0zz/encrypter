@@ -69,18 +69,18 @@ public void testSetSeedSeed() throws Exception {
 
     ////////////////下面的测试用例用于保持算法逻辑不变性//////////////////////////////////
     byte[] example=new byte[]{
-            (byte) 0xe1, (byte)0xec, (byte) 0x66, (byte)0xab,
-            (byte) 0x51, (byte)0x9b, (byte) 0x8c, (byte)0xfe,
-            (byte) 0xd4, (byte)0x19, (byte) 0xba, (byte)0x1c,
-            (byte) 0xaf, (byte)0x12, (byte) 0x85, (byte)0xee};
-    System.out.println(generator);
+            (byte) 0xa6, (byte)0xb7, (byte) 0x23, (byte)0x10,
+            (byte) 0x77, (byte)0x6f, (byte) 0xe9, (byte)0xdf,
+            (byte) 0x67, (byte)0x1e, (byte) 0x72, (byte)0xa9,
+            (byte) 0xa6, (byte)0xb9, (byte) 0x0e, (byte)0x37};
+    //System.out.println(generator);
     Assert.assertTrue(isEqual(generator.state,example));
     //System.out.println(generator.getNextInt());
-    Assert.assertTrue(-1419318047==generator.getNextInt());
-    //System.out.println(generator.getNextChar());
-    Assert.assertTrue('魑'==generator.getNextChar());
+    Assert.assertTrue(321433776==generator.getNextInt());
     //System.out.println(generator.getNextString(10));
-    Assert.assertTrue("ﾌￔﾺﾯﾅ숍䄍ￛﾄﾣ".equals(generator.getNextString(10)));
+    Assert.assertTrue("ﾉﾓﾵꄑﾤㅴﾖﾎ縶艰".equals(generator.getNextString(10)));
+    //System.out.println(generator.getNextChar());
+    Assert.assertTrue('￼'==generator.getNextChar());
     //System.out.println(generator.getNextString(100));
 } 
 
