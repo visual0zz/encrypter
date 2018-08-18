@@ -9,7 +9,7 @@ public final class RandomGenerator{
     public void setSeed(byte[] seed){
         if(seed==null)seed=new byte[]{};//如果输入null视为空串
         state=seed;
-        bytecount=-1;//负数迫使其第一次输出时重新计算state
+        bytecount=-5;//负数迫使其第一次输出时重新计算state
     }
     public void setSeed(String seed){
         if(seed==null)seed="";//如果输入null就当作空串处理
@@ -27,7 +27,7 @@ public final class RandomGenerator{
 
     public byte[] getNextByteArray(){
         generateNextState();
-        bytecount=-1;//标志这个state已经输出过了，如果要get其他的，要出现生成
+        bytecount=-5;//标志这个state已经输出过了，如果要get其他的，要出现生成
         return state;
     }
     public byte getNextByte(){//获得伪随机字节

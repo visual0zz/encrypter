@@ -1,11 +1,17 @@
 package com.zz.encrypter.utils.cryptography; 
 
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
-import org.junit.Test;
-import org.junit.Before; 
-import org.junit.After;
 
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 /** 
 * StreamEncrypter Tester. 
@@ -17,6 +23,7 @@ import java.io.PrintStream;
 public class StreamEncrypterTest {
 
     StreamEncrypter encrypter;
+    String source="1123456789798在个人";//用于测试加密效果的字符串
 @Before
 public void before() throws Exception { 
 } 
@@ -33,11 +40,30 @@ public void after() throws Exception {
 public void testGetInstanceForPasswordStream() throws Exception {
 //TODO: Test goes here...
 
-    ByteOutputStream stream=new ByteOutputStream();
-    encrypter=StreamEncrypter.getInstance("123456",System.out);
+/////////////////////////////加密
+    ByteArrayOutputStream stream=new ByteArrayOutputStream();
+    encrypter=StreamEncrypter.getInstance("123456",stream);
     PrintStream printStream=new PrintStream(encrypter);
-    printStream.println("测试加密效果");
+    printStream.print(source);
 
+    byte[] result=stream.toByteArray();
+    System.out.print(" \""+source+"\" 的加密结果是 [ ");
+    for(int i=0;i<result.length;i++){
+        System.out.print(result[i]);
+        System.out.print(' ');
+    }
+    System.out.print(']');
+
+
+////////////////////////////解密
+    ByteArrayOutputStream jiemi=new ByteArrayOutputStream();
+    encrypter=StreamEncrypter.getInstance("123456",System.out);
+    encrypter.write(result);
+
+    ByteArrayInputStream jieguoin= new ByteArrayInputStream(jiemi.toByteArray());
+    Scanner in=new Scanner(jieguoin);
+    while(in.hasNext())
+        System.out.println(in.next());
 }
 
 /** 
