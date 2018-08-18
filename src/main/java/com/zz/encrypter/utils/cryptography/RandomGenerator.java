@@ -11,13 +11,13 @@ public final class RandomGenerator{
         state=seed;
         bytecount=-5;//负数迫使其第一次输出时重新计算state
     }
+    @Deprecated
     public void setSeed(String seed){
         if(seed==null)seed="";//如果输入null就当作空串处理
         setSeed(seed.getBytes());
     }
     public void setRandomSeed(){setSeed(HashService.md5.getRandomHash().getByteArray());}
     public RandomGenerator(){setRandomSeed();}
-    public RandomGenerator(String seed){setSeed(seed);}
     public RandomGenerator(byte[] seed){setSeed(seed);}
 
     /**
