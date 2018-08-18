@@ -15,7 +15,7 @@ import static java.lang.System.exit;
 //
 //
 //
-
+@Deprecated
 public class StringAndBasicWork {//负责本程序内所有和字符串相关的操作
 
     private static final String findClass="(?<=L)[a-zA-z_0-9/]*(?=;)";//用于在smali语句中查找类的正则表达式

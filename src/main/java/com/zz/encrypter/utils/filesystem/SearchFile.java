@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 //
 //
 //
+@Deprecated
 public class SearchFile {
     public List<String> Do(String path, String regex){
         //path是要搜索的路径 regex 是搜索依据的正则表达式字符串

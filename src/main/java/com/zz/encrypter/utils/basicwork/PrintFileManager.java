@@ -34,7 +34,7 @@ import static java.lang.System.exit;
 // 分组是为了一次性关闭一组文件，每个文件打开时自带一个分组标识字符串，如果不写默认为main分组
 //
 
-
+@Deprecated
 public class PrintFileManager {
 
     private static HashMap<String,Pair<PrintWriter,String>> data;//统一记录所有的文件流

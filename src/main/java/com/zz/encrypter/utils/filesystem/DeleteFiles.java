@@ -1,7 +1,7 @@
 package com.zz.encrypter.utils.filesystem;
 
 import java.io.File;
-
+@Deprecated
 public class DeleteFiles {
     //删除文件夹
     public static void delFolder(String folderPath) {

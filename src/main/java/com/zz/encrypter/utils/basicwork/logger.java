@@ -19,6 +19,7 @@ import static java.lang.System.exit;
 // 以及他们分别对应的OnScreen 版本 OnScreen发出的消息不记录在log文件中 只显示在屏幕上
 //
 //
+@Deprecated
 public class  logger {
     private static final boolean outputScreen=true;//是否输出到屏幕
     private static final boolean outputLogfile=true;//是否输出到日志文件
