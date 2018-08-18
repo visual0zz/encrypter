@@ -3,22 +3,26 @@ package com.zz.encrypter.utils.cryptography;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class StreamEncrypter extends OutputStream {
+/**
+ * @author vis
+ * @apiNote 这是一个流包装类，向这个类打印的数据会被异或加密后送往其内部输出流。
+ */
+public class OutputStreamEncrypter extends OutputStream {
     OutputStream target;
     byte[] passkey;
     RandomGenerator generator;
-    private StreamEncrypter(byte[] password,OutputStream stream) {
+    private OutputStreamEncrypter(byte[] password, OutputStream stream) {
         super();
         passkey=password;
         target=stream;
         generator=new RandomGenerator(password);
     }
-    public static StreamEncrypter getInstance(byte[] password,OutputStream stream){
+    public static OutputStreamEncrypter getInstance(byte[] password, OutputStream stream){
         if(password==null||stream==null) return null;
-        return new StreamEncrypter(password,stream);
+        return new OutputStreamEncrypter(password,stream);
     }
-    public static StreamEncrypter getInstance(String password,OutputStream stream){
-        return new StreamEncrypter(password.getBytes(),stream);
+    public static OutputStreamEncrypter getInstance(String password, OutputStream stream){
+        return new OutputStreamEncrypter(password.getBytes(),stream);
     }
 
 

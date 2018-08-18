@@ -7,23 +7,20 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.Scanner;
 
 /** 
-* StreamEncrypter Tester. 
+* OutputStreamEncrypter Tester.
 * 
 * @author <Authors name> 
 * @since <pre>Aug 18, 2018</pre> 
 * @version 1.0 
 */ 
-public class StreamEncrypterTest {
+public class OutputStreamEncrypterTest {
 
-    StreamEncrypter encrypter;
-    String source="1123456789798在个人";//用于测试加密效果的字符串
+    OutputStreamEncrypter encrypter;
+    String source="天王盖地虎 宝塔镇河妖";//用于测试加密效果的字符串
 @Before
 public void before() throws Exception { 
 } 
@@ -42,7 +39,7 @@ public void testGetInstanceForPasswordStream() throws Exception {
 
 /////////////////////////////加密
     ByteArrayOutputStream stream=new ByteArrayOutputStream();
-    encrypter=StreamEncrypter.getInstance("123456",stream);
+    encrypter=OutputStreamEncrypter.getInstance("123456",stream);
     PrintStream printStream=new PrintStream(encrypter);
     printStream.print(source);
 
@@ -52,17 +49,17 @@ public void testGetInstanceForPasswordStream() throws Exception {
         System.out.print(result[i]);
         System.out.print(' ');
     }
-    System.out.print(']');
+    System.out.println("]");
 
 
 ////////////////////////////解密
     ByteArrayOutputStream jiemi=new ByteArrayOutputStream();
-    encrypter=StreamEncrypter.getInstance("123456",jiemi);
+    encrypter=OutputStreamEncrypter.getInstance("123456",jiemi);
     encrypter.write(result);
 
-    ByteArrayInputStream jieguoin= new ByteArrayInputStream(jiemi.toByteArray());
-    Scanner in=new Scanner(jieguoin);
-    while(in.hasNextLine()) System.out.println(in.nextLine());
+    String it=new String(jiemi.toByteArray(),"utf-8");
+    System.out.println("解密结果是: \""+it+"\" ");
+    Assert.assertEquals(source,it);
 }
 
 /** 
