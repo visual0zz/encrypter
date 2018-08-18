@@ -1,8 +1,8 @@
 package com.zz.encrypter.service;
 
-public class CipherFileHead {
+class CipherFileHead {
     public byte[] outputToByteArray(){
         return null;
     }
-
+    public
 }
