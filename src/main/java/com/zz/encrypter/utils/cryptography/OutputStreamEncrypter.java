@@ -21,10 +21,6 @@ public class OutputStreamEncrypter extends OutputStream {
         if(password==null||stream==null) return null;
         return new OutputStreamEncrypter(password,stream);
     }
-    public static OutputStreamEncrypter getInstance(String password, OutputStream stream){
-        return new OutputStreamEncrypter(password.getBytes(),stream);
-    }
-
 
     @Override
     public void write(int b) throws IOException {

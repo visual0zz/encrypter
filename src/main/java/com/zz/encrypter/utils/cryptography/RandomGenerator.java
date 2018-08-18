@@ -53,13 +53,14 @@ public final class RandomGenerator{
                 ;
     }
 
-
+    @Deprecated
     private char getNextLetterOrDigit() throws Exception {
         char character;
         character=getNextChar();
         if(Character.isLetterOrDigit(character))return character;
         throw new Exception("得到错误的字符");
     }
+    @Deprecated
     public String getNextString(int length){
         if(length<0){
             throw new NegativeArraySizeException("字符串长度不能小于0!");

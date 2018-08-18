@@ -39,7 +39,7 @@ public void testGetInstanceForPasswordStream() throws Exception {
 
 /////////////////////////////加密
     ByteArrayOutputStream stream=new ByteArrayOutputStream();
-    encrypter=OutputStreamEncrypter.getInstance("123456",stream);
+    encrypter=OutputStreamEncrypter.getInstance("123456".getBytes(),stream);
     PrintStream printStream=new PrintStream(encrypter);
     printStream.print(source);
 
@@ -54,7 +54,7 @@ public void testGetInstanceForPasswordStream() throws Exception {
 
 ////////////////////////////解密
     ByteArrayOutputStream jiemi=new ByteArrayOutputStream();
-    encrypter=OutputStreamEncrypter.getInstance("123456",jiemi);
+    encrypter=OutputStreamEncrypter.getInstance("123456".getBytes(),jiemi);
     encrypter.write(result);
 
     String it=new String(jiemi.toByteArray(),"utf-8");
