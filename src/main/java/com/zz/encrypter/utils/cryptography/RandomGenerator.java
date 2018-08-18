@@ -21,10 +21,8 @@ public final class RandomGenerator{
     public RandomGenerator(byte[] seed){setSeed(seed);}
 
 
-    private void generateNextState(){
-
-        //state=md5.getHash(new String(state)+Integer.toBinaryString(bytecount)).getByteArray();
-        state= HashService.md5.getHash(concat(state,int2byte(bytecount))).getByteArray();
+    protected void generateNextState(){
+        state= HashService.md5.getHash(concat(state,int2byte(bytecount^0x13768524))).getByteArray();
     }
 
     public byte[] getNextByteArray(){
