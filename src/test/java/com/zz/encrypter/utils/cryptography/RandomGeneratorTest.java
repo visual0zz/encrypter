@@ -87,11 +87,10 @@ public void testSetRandomSeed() throws Exception {
     RandomGenerator generator2=new RandomGenerator();
     generator2.getNextString(123);
 
-    boolean[] result=new boolean[5];
+    boolean[] result=new boolean[3];
     result[1]=this.generator.getNextChar()==generator2.getNextChar();
-    result[2]= this.generator.getNextString(3).equals(generator2.getNextString(3));
-    result[3]=this.generator.getNextByte()==generator2.getNextByte();
-    result[4]=this.generator.getNextInt()==generator2.getNextInt();
+    result[0]=this.generator.getNextByte()==generator2.getNextByte();
+    result[2]=this.generator.getNextInt()==generator2.getNextInt();
     int count=0;
     for(boolean a:result){
         if(a)count++;

@@ -50,5 +50,6 @@ public class OutputStreamEncrypter extends OutputStream {
     @Override
     public void close() throws IOException {
         target.close();
+        target=null;
     }
 }
