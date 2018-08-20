@@ -37,6 +37,18 @@ public class ByteArrayUtils {
                 | (res[2] <<16) | (res[3] << 24);
         return targets;
     }
+    public static long byte2long(byte[] res){
+        if(res==null)throw new InvalidParameterException("参数不能为空。");
+        long target=(res[0]&0xffL)|((res[1]<<8)&0xff00L)
+                |((res[2]<<16)&0xff0000L)
+                |((res[3]<<24)&0xff000000L)
+                |((res[4]<<32)&0xff00000000L)
+                |((res[5]<<40)&0xff0000000000L)
+                |((res[6]<<48)&0xff000000000000L)
+                |((res[7]<<56)&0xff00000000000000L)
+                ;
+        return target;
+    }
     public static byte[] concat(byte[] a, byte[] b) {//数组合并
         if(a==null||b==null)throw new InvalidParameterException("参数不能为空。");
 

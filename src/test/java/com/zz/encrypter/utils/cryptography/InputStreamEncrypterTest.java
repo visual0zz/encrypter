@@ -1,8 +1,17 @@
 package com.zz.encrypter.utils.cryptography; 
 
-import org.junit.Test; 
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.Before; 
-import org.junit.After; 
+import org.junit.After;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.util.Scanner;
+
+import static com.zz.encrypter.utils.basicwork.ByteArrayUtils.isEqual;
 
 /** 
 * InputStreamEncrypter Tester. 
@@ -11,8 +20,7 @@ import org.junit.After;
 * @since <pre>Aug 20, 2018</pre> 
 * @version 1.0 
 */ 
-public class InputStreamEncrypterTest { 
-
+public class InputStreamEncrypterTest {
 @Before
 public void before() throws Exception { 
 } 
@@ -28,7 +36,16 @@ public void after() throws Exception {
 */ 
 @Test
 public void testRead() throws Exception { 
-//TODO: Test goes here... 
+//TODO: Test goes here...
+    InputStreamEncrypter source;
+    byte[] aaa=("123 456").getBytes();
+    ByteArrayOutputStream out=new ByteArrayOutputStream();
+    source=new InputStreamEncrypter("123ff".getBytes(),new ByteArrayInputStream(aaa));
+    OutputStreamEncrypter target=new OutputStreamEncrypter("123ff".getBytes(),out);
+    while(source.available()>0){
+        target.write(source.read());
+    }
+    Assert.assertTrue(isEqual(aaa,out.toByteArray()));
 } 
 
 /** 

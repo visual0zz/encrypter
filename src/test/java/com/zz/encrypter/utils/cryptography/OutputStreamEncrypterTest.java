@@ -39,26 +39,26 @@ public void testGetInstanceForPasswordStream() throws Exception {
 
 /////////////////////////////加密
     ByteArrayOutputStream stream=new ByteArrayOutputStream();
-    encrypter=OutputStreamEncrypter.getInstance("123456".getBytes(),stream);
+    encrypter=new OutputStreamEncrypter("123456".getBytes(),stream);
     PrintStream printStream=new PrintStream(encrypter);
     printStream.print(source);
 
     byte[] result=stream.toByteArray();
-    System.out.print(" \""+source+"\" 的加密结果是 [ ");
-    for(int i=0;i<result.length;i++){
+    //System.out.print(" \""+source+"\" 的加密结果是 [ ");
+    /*for(int i=0;i<result.length;i++){
         System.out.print(result[i]);
         System.out.print(' ');
-    }
-    System.out.println("]");
+    }//*///
+    //System.out.println("]");
 
 
 ////////////////////////////解密
     ByteArrayOutputStream jiemi=new ByteArrayOutputStream();
-    encrypter=OutputStreamEncrypter.getInstance("123456".getBytes(),jiemi);
+    encrypter=new OutputStreamEncrypter("123456".getBytes(),jiemi);
     encrypter.write(result);
 
     String it=new String(jiemi.toByteArray(),"utf-8");
-    System.out.println("解密结果是: \""+it+"\" ");
+    //System.out.println("解密结果是: \""+it+"\" ");
     Assert.assertEquals(source,it);
 }
 
