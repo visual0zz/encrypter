@@ -29,8 +29,8 @@ public class InputStreamEncrypter extends InputStream {
     public int read(byte[] b) throws IOException {
         int result=in.read(b);
         //*
-        for(byte i:b){
-            i= (byte) (i^generator.getNextByte());
+        for(int i=0;i<b.length;i++){
+            b[i]= (byte) (b[i]^generator.getNextByte());
         }//*/
         return result;
     }

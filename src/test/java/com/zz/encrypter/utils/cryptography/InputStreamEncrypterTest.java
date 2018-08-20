@@ -48,55 +48,5 @@ public void testRead() throws Exception {
     Assert.assertTrue(isEqual(aaa,out.toByteArray()));
 } 
 
-/** 
-* 
-* Method: available() 
-* 
-*/ 
-@Test
-public void testAvailable() throws Exception { 
-//TODO: Test goes here... 
-} 
-
-/** 
-* 
-* Method: close() 
-* 
-*/ 
-@Test
-public void testClose() throws Exception { 
-//TODO: Test goes here... 
-} 
-
-/** 
-* 
-* Method: reset() 
-* 
-*/ 
-@Test
-public void testReset() throws Exception { 
-//TODO: Test goes here... 
-} 
-
-/** 
-* 
-* Method: mark(int readlimit) 
-* 
-*/ 
-@Test
-public void testMark() throws Exception { 
-//TODO: Test goes here... 
-} 
-
-/** 
-* 
-* Method: markSupported() 
-* 
-*/ 
-@Test
-public void testMarkSupported() throws Exception { 
-//TODO: Test goes here... 
-} 
-
 
 } 

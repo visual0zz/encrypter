@@ -22,12 +22,12 @@ public class CipherFileHead {//加密文件的文件头格式
 
     byte[] salt;//这个应该是16字节长,salt。
 
-    byte[] fixed_area;//16字节长，内容是两遍magic_word^md5(password)，这里的内容被写入流时要加密
+    byte[] mark;//16字节长，内容是两遍magic_word^md5(password)，这里的内容被写入流时要加密,用于区分密码是否正确
     //endregion
 
     //region //元数据
     boolean empty;//当前是否储存为空。
-    private byte[] passkey;//暂存密码，不参与输出
+    byte[] passkey;//暂存密码，不参与输出
     //endregion
 
     /**
@@ -39,9 +39,9 @@ public class CipherFileHead {//加密文件的文件头格式
         if(salt.length!=16)throw new InvalidParameterException("salt需要16字节长的字节数组。");
         this.length=length;
         this.salt=salt;
-        fixed_area=ByteArrayUtils.concat(magic_word,magic_word);//两遍magic_word
+        mark =ByteArrayUtils.concat(magic_word,magic_word);//两遍magic_word
         byte[] temp=HashService.md5.getHash(password).getByteArray();//md5(password)
-        fixed_area=ByteArrayUtils.xor(fixed_area,temp);
+        mark =ByteArrayUtils.xor(mark,temp);
         passkey=password;
         empty=false;
     }
@@ -55,7 +55,7 @@ public class CipherFileHead {//加密文件的文件头格式
         out.write(magic_word);//8字节
         out.write(long2byte(length));//8字节
         out.write(salt);//16字节
-        encrypter.write(fixed_area);//输出加密过的固定区
+        encrypter.write(mark);//输出加密过的固定区
     }
     public void readFromStream(InputStream in) throws IOException {
         empty=true;
@@ -74,15 +74,15 @@ public class CipherFileHead {//加密文件的文件头格式
 
         InputStreamEncrypter encrypter=new InputStreamEncrypter(concat(passkey,salt),in);
 
-        if(encrypter.read(fixed_area)!=16)throw new InvalidPropertiesFormatException("输入流内没有足够数据，无法解析文件头");
+        if(encrypter.read(mark)!=16)throw new InvalidPropertiesFormatException("输入流内没有足够数据，无法解析文件头");
 
         byte[] temp=HashService.md5.getHash(passkey).getByteArray();//md5(password)
-        fixed_area=ByteArrayUtils.xor(fixed_area,temp);//解码这个区域，看密码是否正确
-        if(!isEqual(fixed_area,concat(magic_word,magic_word))) ;//throw new SecurityException("密码错误，读取不到正确数据");
+        byte[] fixed=ByteArrayUtils.xor(mark,temp);//解码这个区域，看密码是否正确
+        if(!isEqual(fixed,concat(magic_word,magic_word)))throw new SecurityException("密码错误，读取不到正确数据");
         empty=false;
     }
     private void allocSpace(){
         if(salt==null)salt=new byte[16];
-        if(fixed_area==null)fixed_area=new byte[16];
+        if(mark ==null) mark =new byte[16];
     }
 }
