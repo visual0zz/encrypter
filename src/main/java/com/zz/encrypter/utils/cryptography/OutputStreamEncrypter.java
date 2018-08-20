@@ -2,6 +2,7 @@ package com.zz.encrypter.utils.cryptography;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.security.InvalidParameterException;
 
 /**
  * @author vis
@@ -11,16 +12,20 @@ public class OutputStreamEncrypter extends OutputStream {
     OutputStream target;
     byte[] passkey;
     RandomGenerator generator;
-    private OutputStreamEncrypter(byte[] password, OutputStream stream) {
+
+    /**
+     *
+     * @param password 密码
+     * @param stream 输出流
+     */
+    public OutputStreamEncrypter(byte[] password, OutputStream stream) {
         super();
+        if(password==null||stream==null)throw new InvalidParameterException("输入参数不能为null");
         passkey=password;
         target=stream;
         generator=new RandomGenerator(password);
     }
-    public static OutputStreamEncrypter getInstance(byte[] password, OutputStream stream){
-        if(password==null||stream==null) return null;
-        return new OutputStreamEncrypter(password,stream);
-    }
+
 
     @Override
     public void write(int b) throws IOException {

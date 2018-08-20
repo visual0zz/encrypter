@@ -2,19 +2,27 @@ package com.zz.encrypter.utils.cryptography;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.InvalidParameterException;
 
 /**
  * 输入流的结构优点复杂，以后再写
  */
 @Deprecated
 public class InputStreamEncrypter extends InputStream {
-    public InputStreamEncrypter() {
+    InputStream in;
+    byte[]passkey;
+    RandomGenerator generator;
+    public InputStreamEncrypter(byte[] password,InputStream inputStream) {
         super();
+        if(password==null||inputStream==null)throw new InvalidParameterException("输入参数不能为null");
+        in=inputStream;//保存输入源流
+        passkey=password;
+        generator=new RandomGenerator();
     }
 
     @Override
     public int read() throws IOException {
-        return 0;
+        return in.read();
     }
 
     @Override

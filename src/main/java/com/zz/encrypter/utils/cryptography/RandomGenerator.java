@@ -52,7 +52,11 @@ public final class RandomGenerator{
         return  byte2int(new byte[]{getNextByte(),getNextByte(),getNextByte(),getNextByte()})
                 ;
     }
-
+    public void jump(int bytes){
+        for(int i=0;i<bytes;i++){
+            getNextByte();
+        }
+    }
     @Deprecated
     private char getNextLetterOrDigit() throws Exception {
         char character;
