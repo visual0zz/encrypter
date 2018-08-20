@@ -24,13 +24,7 @@ public final class RandomGenerator{
      * 从当前状态得到下一个状态。
      */
     protected void generateNextState(){
-        state= HashService.md5.getHash(concat(state,int2byte(bytecount^0x13768524))).getByteArray();
-    }
-
-    public byte[] getNextByteArray(){
-        generateNextState();
-        bytecount=-5;//标志这个state已经输出过了，如果要get其他的，要重新生成
-        return state;
+        state= HashService.md5.getHash(concat(state,int2byte(0x78563412))).getByteArray();
     }
     public byte getNextByte(){//获得伪随机字节
         bytecount++;
@@ -113,7 +107,7 @@ public final class RandomGenerator{
     public int hashCode() {
         return (new String(state)+Integer.toBinaryString(bytecount)).hashCode();
     }
-    private static byte[] int2byte(int res) {
+    static byte[] int2byte(int res) {
         byte[] targets = new byte[4];
         targets[0] = (byte) (res & 0xff);// 最低位
         targets[1] = (byte) ((res >> 8) & 0xff);// 次低位
@@ -121,12 +115,12 @@ public final class RandomGenerator{
         targets[3] = (byte) (res >>> 24);// 最高位,无符号右移。
         return targets;
     }
-    private static int byte2int(byte[] res) {
+    static int byte2int(byte[] res) {
         int targets = (res[0] & 0xff) | ((res[1] << 8) & 0xff00) // '|' 表示按位或
                 | (res[2] <<16) | (res[3] << 24);
         return targets;
     }
-    private static byte[] concat(byte[] a, byte[] b) {//数组合并
+    static byte[] concat(byte[] a, byte[] b) {//数组合并
         final int alen = a.length;
         final int blen = b.length;
         if (alen == 0) {

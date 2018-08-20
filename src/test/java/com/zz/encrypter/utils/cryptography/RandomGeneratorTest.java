@@ -6,6 +6,9 @@ import org.junit.Test;
 import org.junit.Before; 
 import org.junit.After;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import static com.zz.encrypter.utils.cryptography.HashService.isEqual;
 
 /** 
@@ -38,19 +41,15 @@ public void testSetSeedSeed() throws Exception {
 
         generator.setSeed(new byte[]{});//测试给乱七八糟的种子会不会崩溃
         generator.getNextByte();
-        generator.getNextByteArray();
         generator.getNextChar();
         generator.getNextInt();
-        generator.getNextString(41);
 
         RandomGenerator generator=new RandomGenerator();
 
         generator.setSeed(new String(""));
         generator.getNextByte();
-        generator.getNextByteArray();
         generator.getNextChar();
         generator.getNextInt();
-        generator.getNextString(41);
 
     Assert.assertEquals("相同的种子得到了不同的序列",this.generator,generator);
     Assert.assertEquals(
@@ -58,13 +57,10 @@ public void testSetSeedSeed() throws Exception {
             this.generator.getNextString(4),
             generator.getNextString(4));
     Assert.assertEquals("相同的种子得到了不同的序列",this.generator.getNextInt(),generator.getNextInt());
+
     generator.getNextByte();
-    generator.getNextByte();
-    generator.getNextByte();
-    //System.out.println(generator.bytecount);
-    Assert.assertTrue("不同的状态得到了相同的序列",!isEqual(this.generator.getNextByteArray(),generator.getNextByteArray()));
-    //System.out.println(generator.bytecount);
-    Assert.assertNotEquals("不同的状态得到了相同的序列",this.generator,generator);
+
+    Assert.assertNotEquals("不同的状态得到了相同的序列",this.generator.getNextInt(),generator.getNextInt());
     //System.out.println(generator);
 
     ////////////////下面的测试用例用于保持算法逻辑不变性//////////////////////////////////
@@ -98,7 +94,6 @@ public void testSetRandomSeed() throws Exception {
     generator2.getNextString(123);
 
     boolean[] result=new boolean[5];
-    result[0]=this.generator.getNextByteArray()==generator2.getNextByteArray();
     result[1]=this.generator.getNextChar()==generator2.getNextChar();
     result[2]= this.generator.getNextString(3).equals(generator2.getNextString(3));
     result[3]=this.generator.getNextByte()==generator2.getNextByte();
@@ -111,5 +106,60 @@ public void testSetRandomSeed() throws Exception {
 
 }
 
+/**
+*
+* Method: int2byte(int res)
+*
+*/
+@Test
+public void testInt2byte() throws Exception {
+//TODO: Test goes here...
+/*
+    System.out.println("0x78563412:");
+   byte[] result=RandomGenerator.int2byte(0x78563412);
+   for(byte a:result) System.out.print(a+" ");
+   System.out.println();
+//*/
+}
+
+/**
+*
+* Method: byte2int(byte[] res)
+*
+*/
+@Test
+public void testByte2int() throws Exception {
+//TODO: Test goes here...
+/*
+try {
+   Method method = RandomGenerator.getClass().getMethod("byte2int", byte[].class);
+   method.setAccessible(true);
+   method.invoke(<Object>, <Parameters>);
+} catch(NoSuchMethodException e) {
+} catch(IllegalAccessException e) {
+} catch(InvocationTargetException e) {
+}
+*/
+}
+
+/**
+*
+* Method: concat(byte[] a, byte[] b)
+*
+*/
+@Test
+public void testConcat() throws Exception {
+//TODO: Test goes here...
+/*
+try {
+   Method method = RandomGenerator.getClass().getMethod("concat", byte[].class, byte[].class);
+   method.setAccessible(true);
+   method.invoke(<Object>, <Parameters>);
+} catch(NoSuchMethodException e) {
+} catch(IllegalAccessException e) {
+} catch(InvocationTargetException e) {
+}
+*/
+}
 
 } 
