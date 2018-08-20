@@ -20,7 +20,7 @@ public class 随便测试 {
             System.out.print(String.format("%x",b)+" ");
         }
     }
-    @Test
+    //@Test
     public void 测试两个流汇聚(){
         PrintStream str1=new PrintStream(System.out);
         PrintStream str2=new PrintStream(System.out);
