@@ -77,13 +77,30 @@ public class ByteArrayUtils {
         return result;
     }
 
-    public static void outputByte(OutputStream out,byte[] res) throws IOException {
+    /**
+     *
+     * @param out 要输出到的流
+     * @param res 要输出的数据
+     * @param with_name 输出时显示的数据集名称
+     * @param group_distance 数据分组的距离，为0表示不分组
+     * @throws IOException
+     */
+    public static void outputByte(OutputStream out,byte[] res,String with_name,int group_distance) throws IOException {
+        if(out==null||res==null)throw new InvalidParameterException("参数不能为空。");
         PrintStream o=new PrintStream(out);
-        o.print("byte[]{ ");
+        o.print(with_name+"{ ");
         for(int i=0;i<res.length;i++){
             o.print(String.format("%02x",res[i])+" ");
+            if(group_distance!=0&&i!=0)
+                if((i+1)%group_distance==0&& i+1<res.length)o.print("| ");
         }
         o.println("}");
+    }
+    public static void outputByte(OutputStream out,byte[] res,String with_name) throws IOException {
+        outputByte(out,res,with_name,0);
+    }
+    public static void outputByte(OutputStream out,byte[] res) throws IOException {
+        outputByte(out,res,"byte[]");
     }
 
     public static boolean isEqual(byte[] a,byte[] b){
