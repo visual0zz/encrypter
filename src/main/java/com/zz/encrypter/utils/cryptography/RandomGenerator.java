@@ -54,6 +54,7 @@ public final class RandomGenerator{
         if(Character.isLetterOrDigit(character))return character;
         throw new Exception("得到错误的字符");
     }
+
     @Deprecated
     public String getNextString(int length){
         if(length<0){
