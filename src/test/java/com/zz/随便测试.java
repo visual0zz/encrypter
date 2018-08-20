@@ -11,7 +11,7 @@ public class 随便测试 {
     public void test(){
         //CipherFileHead.magic_word[1]=3;
     }
-    @Test
+    //@Test
     public void outputRandomStringConstantly(){
         String str="zzprivate";
         byte[]res=str.getBytes();

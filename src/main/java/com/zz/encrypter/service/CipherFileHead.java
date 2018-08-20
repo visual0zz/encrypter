@@ -1,11 +1,12 @@
 package com.zz.encrypter.service;
 
-import com.zz.encrypter.utils.cryptography.ByteArrayUtils;
+import com.zz.encrypter.utils.basicwork.ByteArrayUtils;
 import com.zz.encrypter.utils.cryptography.HashService;
 import com.zz.encrypter.utils.cryptography.RandomGenerator;
+import org.omg.CORBA_2_3.portable.OutputStream;
 
+import java.io.IOException;
 import java.security.InvalidParameterException;
-import java.util.HashSet;
 
 public class CipherFileHead {//加密文件的文件头格式
     final static private byte[] magic_word={0x7a, 0x7a, 0x70, 0x72, 0x69, 0x76, 0x61, 0x74};
@@ -18,6 +19,10 @@ public class CipherFileHead {//加密文件的文件头格式
     byte[] fixed_area;//16字节长，内容是两遍magic_word^md5(password)，这里的内容被写入流时要加密
 
     boolean empty;//当前是否储存为空。
+
+
+
+    private byte[] passkey;//暂存密码，不参与输出
     /**
      * @param length 原文件的长度，字节记。
      * @param password 用于加密的密码。
@@ -29,13 +34,16 @@ public class CipherFileHead {//加密文件的文件头格式
         this.salt=salt;
         fixed_area=ByteArrayUtils.concat(magic_word,magic_word);//两遍magic_word
         byte[] temp=HashService.md5.getHash(password).getByteArray();//md5(password)
-        //fixed_area=
+        fixed_area=ByteArrayUtils.xor(fixed_area,temp);
+        passkey=password;
         empty=false;
     }
     CipherFileHead(){empty=true;}
 
-    public byte[] outputToByteArray(){
-        return null;
+    public void outputToStream(OutputStream out) throws IOException {
+        RandomGenerator random=new RandomGenerator(passkey);
+        out.write(magic_word);
+        //out.write(length);
     }
     public void buildFromByteArray(byte[] in){
 

@@ -1,15 +1,11 @@
 package com.zz.encrypter.utils.cryptography;
 
-import com.zz.encrypter.utils.cryptography.RandomGenerator;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before; 
 import org.junit.After;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import static com.zz.encrypter.utils.cryptography.HashService.isEqual;
+import static com.zz.encrypter.utils.basicwork.ByteArrayUtils.isEqual;
 
 /** 
 * RandomGenerator Tester. 

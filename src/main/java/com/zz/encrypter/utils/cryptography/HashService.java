@@ -24,9 +24,7 @@ public enum HashService {
         }
         return new String(str);
     }
-    public static boolean isEqual(byte[] a,byte[] b){
-        return (new HashResult(a)).equals(new HashResult(b));
-    }
+
     public static boolean isEqual(HashResult a,HashResult b){
         return a.equals(b);
     }

@@ -1,8 +1,10 @@
 package com.zz.encrypter.utils.cryptography;
 
-import static com.zz.encrypter.utils.cryptography.ByteArrayUtils.byte2int;
-import static com.zz.encrypter.utils.cryptography.ByteArrayUtils.concat;
-import static com.zz.encrypter.utils.cryptography.ByteArrayUtils.int2byte;
+import com.zz.encrypter.utils.basicwork.ByteArrayUtils;
+
+import static com.zz.encrypter.utils.basicwork.ByteArrayUtils.byte2int;
+import static com.zz.encrypter.utils.basicwork.ByteArrayUtils.concat;
+import static com.zz.encrypter.utils.basicwork.ByteArrayUtils.int2byte;
 
 public final class RandomGenerator{
 
@@ -102,7 +104,7 @@ public final class RandomGenerator{
     public boolean equals(Object obj) {
         if(obj.getClass()!=this.getClass())return false;
         RandomGenerator other=(RandomGenerator)obj;
-        if(HashService.isEqual(this.state,other.state) && this.bytecount==other.bytecount)
+        if(ByteArrayUtils.isEqual(this.state,other.state) && this.bytecount==other.bytecount)
             return true;
         else
             return false;
