@@ -53,7 +53,8 @@ public void testWriteToStream() throws Exception {
     //outputByte(System.out,head2.salt,"head2 salt",8);
     //outputByte(System.out,head2.mark,"head2 fix",8);
 
-    Assert.assertTrue(isEqual(head.mark,head2.mark));
+    Assert.assertTrue(isEqual(head.getSalt(),head2.getSalt()));
+    Assert.assertTrue(isEqual(head.getMark(),head2.getMark()));
 } 
 
 /** 

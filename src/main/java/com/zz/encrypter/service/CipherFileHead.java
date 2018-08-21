@@ -18,18 +18,29 @@ public class CipherFileHead {//加密文件的文件头格式
     final static private byte[] magic_word={0x7a, 0x7a, 0x70, 0x72, 0x69, 0x76, 0x61, 0x74};
     //用于标识加密文件的魔数，其实质是Asicii码的"zzprivat"，少一个字母e是为了凑8字节，方便对齐。
 
-    long length;//原文件长度。
+    private long length;//原文件长度。
 
-    byte[] salt;//这个应该是16字节长,salt。
 
-    byte[] mark;//16字节长，内容是两遍magic_word^md5(password)，这里的内容被写入流时要加密,用于区分密码是否正确
+
+    private byte[] salt;//这个应该是16字节长,salt。
+
+
+
+    private byte[] mark;//16字节长，内容是两遍magic_word^md5(password)，这里的内容被写入流时要加密,用于区分密码是否正确
     //endregion
 
     //region //元数据
-    boolean empty;//当前是否储存为空。
-    byte[] passkey;//暂存密码，不参与输出
+    private boolean empty;//当前是否储存为空。
+    private byte[] passkey;//暂存密码，不参与输出
     //endregion
 
+
+    public byte[] getSalt() {
+        return salt;
+    }
+    public byte[] getMark() {
+        return mark;
+    }
     /**
      * @param length 原文件的长度，字节记。
      * @param password 用于加密的密码。
