@@ -19,6 +19,8 @@ public class CipherFileHead {//加密文件的文件头格式
     final static private byte[] magic_word={0x7a, 0x7a, 0x70, 0x72, 0x69, 0x76, 0x61, 0x74};
     //用于标识加密文件的魔数，其实质是Asicii码的"zzprivat"，少一个字母e是为了凑8字节，方便对齐。
 
+
+
     private long length;//原文件长度。
 
 
@@ -35,7 +37,9 @@ public class CipherFileHead {//加密文件的文件头格式
     private byte[] passkey;//暂存密码，不参与输出
     //endregion
 
-
+    public long getLength() {
+        return length;
+    }
     public byte[] getSalt() {
         return salt;
     }
@@ -47,7 +51,7 @@ public class CipherFileHead {//加密文件的文件头格式
      * @param password 用于加密的密码。
      * @param salt 用于添加随机性的附加值，应该为16位长。
      */
-    CipherFileHead(  byte[] password, byte[] salt,long length){
+    public CipherFileHead(  byte[] password, byte[] salt,long length){
         if(salt.length!=16)throw new InvalidParameterException("salt需要16字节长的字节数组。");
         this.length=length;
         this.salt=salt;
@@ -57,10 +61,10 @@ public class CipherFileHead {//加密文件的文件头格式
         passkey=password;
         empty=false;
     }
-    CipherFileHead(byte[] passkey){empty=true;this.passkey=passkey;}
+    public CipherFileHead(byte[] passkey){empty=true;this.passkey=passkey;}
 
-    public void writeToStream(OutputStream out) throws IOException, PasswordException {//输出文件头
-        if(empty)throw new PasswordException("对一个没有数据的CipherFileHead对象进行输出是没有意义的。");
+    public void writeToStream(OutputStream out) throws IOException {//输出文件头
+        if(empty)throw new InvalidParameterException("对一个没有数据的CipherFileHead对象进行输出是没有意义的。");
 
         OutputStreamEncrypter encrypter=new OutputStreamEncrypter(concat(passkey,salt),out);
 
