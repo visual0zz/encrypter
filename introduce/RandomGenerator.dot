@@ -1,0 +1,18 @@
+digraph random_core{
+    label="aaa";
+    vvv;
+    subgraph cluster_asdf{
+        label="data-generate algorithm";
+        bgcolor=green;
+        datablock1[shape="box"];
+        datablock2[shape="box"];
+        datablock3[shape="box"];
+        datablock4[shape="box"];
+        "...";
+        seed->datablock1[label="hash"];
+        datablock1->datablock2[label="hash"];
+        datablock2->datablock3[label="hash"];
+        datablock3->datablock4[label="hash"];
+        datablock4->"..."[label="hash"];
+    }
+}
