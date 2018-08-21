@@ -17,6 +17,13 @@ public class HashServiceTest {
     public void testGetRandomHash(){
         Assert.assertTrue(HashService.isEqual(HashService.md5.getHash("昆仑"), HashService.md5.getHash("昆仑")));
         Assert.assertTrue(!HashService.isEqual(HashService.md5.getHash("昆仑"), HashService.md5.getHash("涤纶")));
-        Assert.assertTrue(!HashService.isEqual(HashService.md5.getRandomHash(), HashService.md5.getRandomHash()));
+        HashService.HashResult hash1=HashService.md5.getRandomHash();
+        try {
+            Thread.currentThread().sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        HashService.HashResult hash2=HashService.md5.getRandomHash();
+        Assert.assertTrue(!HashService.isEqual(hash1,hash2));
     }
 }
