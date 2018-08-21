@@ -4,12 +4,13 @@ import com.zz.encrypter.utils.basicwork.ByteArrayUtils;
 import com.zz.encrypter.utils.cryptography.HashService;
 import com.zz.encrypter.utils.cryptography.InputStreamEncrypter;
 import com.zz.encrypter.utils.cryptography.OutputStreamEncrypter;
-import java.io.OutputStream;
 
 import java.io.IOException;
+import java.io.OutputStream;
+
+
 import java.io.InputStream;
 import java.security.InvalidParameterException;
-import java.util.InvalidPropertiesFormatException;
 
 import static com.zz.encrypter.utils.basicwork.ByteArrayUtils.*;
 
@@ -58,8 +59,8 @@ public class CipherFileHead {//加密文件的文件头格式
     }
     CipherFileHead(byte[] passkey){empty=true;this.passkey=passkey;}
 
-    public void writeToStream(OutputStream out) throws IOException {//输出文件头
-        if(empty)throw new SecurityException("对一个没有数据的CipherFileHead对象进行输出是没有意义的。");
+    public void writeToStream(OutputStream out) throws IOException, PasswordException {//输出文件头
+        if(empty)throw new PasswordException("对一个没有数据的CipherFileHead对象进行输出是没有意义的。");
 
         OutputStreamEncrypter encrypter=new OutputStreamEncrypter(concat(passkey,salt),out);
 
@@ -68,28 +69,28 @@ public class CipherFileHead {//加密文件的文件头格式
         out.write(salt);//16字节
         encrypter.write(mark);//输出加密过的固定区
     }
-    public void readFromStream(InputStream in) throws IOException {
+    public void readFromStream(InputStream in) throws IOException, InputFormatException, PasswordException {
         empty=true;
         allocSpace();
 
         byte[] magic=new byte[8];
-        if(in.read(magic)!=8)throw new InvalidPropertiesFormatException("输入流内没有足够数据，无法解析文件头");
-        if(!isEqual(magic,magic_word))throw new InvalidPropertiesFormatException("文件格式错误，无法解析");
+        if(in.read(magic)!=8)throw new InputFormatException("输入流内没有足够数据，无法解析文件头");
+        if(!isEqual(magic,magic_word))throw new InputFormatException("文件格式错误，无法解析");
 
         byte[] length=new byte[8];
-        if(in.read(length)!=8)throw new InvalidPropertiesFormatException("输入流内没有足够数据，无法解析文件头");
+        if(in.read(length)!=8)throw new InputFormatException("输入流内没有足够数据，无法解析文件头");
         this.length=byte2long(length);
 
         //byte[] salt=new byte[16];
-        if(in.read(salt)!=16)throw new InvalidPropertiesFormatException("输入流内没有足够数据，无法解析文件头");
+        if(in.read(salt)!=16)throw new InputFormatException("输入流内没有足够数据，无法解析文件头");
 
         InputStreamEncrypter encrypter=new InputStreamEncrypter(concat(passkey,salt),in);
 
-        if(encrypter.read(mark)!=16)throw new InvalidPropertiesFormatException("输入流内没有足够数据，无法解析文件头");
+        if(encrypter.read(mark)!=16)throw new InputFormatException("输入流内没有足够数据，无法解析文件头");
 
         byte[] temp=HashService.md5.getHash(passkey).getByteArray();//md5(password)
         byte[] fixed=ByteArrayUtils.xor(mark,temp);//解码这个区域，看密码是否正确
-        if(!isEqual(fixed,concat(magic_word,magic_word)))throw new SecurityException("密码错误，读取不到正确数据");
+        if(!isEqual(fixed,concat(magic_word,magic_word)))throw new PasswordException("密码错误，读取不到正确数据");
         empty=false;
     }
     private void allocSpace(){
