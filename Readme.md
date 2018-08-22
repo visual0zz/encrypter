@@ -33,3 +33,12 @@ sum(n)=md5(sum(n-1)+buff(n-1))\
 流加密算法
 =====
 
+加密算法流程:
+
+![](introduce/RandomGenerator.png)
+
+seed就是用于加密的密码
+
+得到的密钥序列
+{datablock1,datablock2,datablock3.....}
+和原数据进行异或得到加密结果。

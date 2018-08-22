@@ -1,18 +1,32 @@
 digraph random_core{
-    label="aaa";
-    vvv;
+    rankdir=LR;
+    seed;
+    out;
+    seed->datablock1[label="hash"];
     subgraph cluster_asdf{
         label="data-generate algorithm";
         bgcolor=green;
         datablock1[shape="box"];
         datablock2[shape="box"];
-        datablock3[shape="box"];
-        datablock4[shape="box"];
-        "...";
-        seed->datablock1[label="hash"];
+        "..."[shape=box];
         datablock1->datablock2[label="hash"];
-        datablock2->datablock3[label="hash"];
-        datablock3->datablock4[label="hash"];
-        datablock4->"..."[label="hash"];
+        datablock2->"..."[label="hash"];
+        //{rank=same;out,"..."}
     }
+    input;
+    input -> add;
+    subgraph cluster_nerf{
+    label="hash";
+    add[label="append"];
+    source[label="0x12,0x34,0x56,0x78",shape=box];
+    source->add;
+    md5[shape=box];
+    add->md5;
+    {rank=same;add,source}
+    }
+    md5->out;
+
+    {rank=same;input,seed}
+
 }
+
