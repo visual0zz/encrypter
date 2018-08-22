@@ -68,7 +68,7 @@ public class FileEncrypter {
      * @return 返回检查结果，即这个密文是不是由这个密码加密的。
      * @throws IOException 读取数据中断或者输入格式错误
      */
-    public static boolean isLockedBy(InputStream source, byte[] password) throws IOException {
+    public static boolean isEncryptedBy(InputStream source, byte[] password) throws IOException {
         CipherFileHead head=new CipherFileHead(password);
         try {
             head.readFromStream(source);

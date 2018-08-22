@@ -58,7 +58,7 @@ public void testDecrypt() throws Exception {
 
 /**
 *
-* Method: isLockedBy(InputStream source, byte[] password)
+* Method: isEncryptedBy(InputStream source, byte[] password)
 *
 */
 @Test
