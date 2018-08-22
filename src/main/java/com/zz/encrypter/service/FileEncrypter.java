@@ -10,6 +10,8 @@ import java.io.OutputStream;
 import java.security.InvalidParameterException;
 
 import static com.zz.encrypter.utils.basicwork.ByteArrayUtils.concat;
+import static com.zz.encrypter.utils.basicwork.ByteArrayUtils.isEqual;
+import static com.zz.encrypter.utils.basicwork.ByteArrayUtils.long2byte;
 
 public class FileEncrypter {
 
@@ -22,15 +24,20 @@ public class FileEncrypter {
      * @param password 用于加密的密码
      */
     public static void encrypt(InputStream from,OutputStream to,byte[] password,long stream_length) throws Exception {
+        CheckSum sum=new CheckSum();
         byte[] salt=HashService.md5.getRandomHash().getByteArray();//得到随机盐。
         CipherFileHead head=new CipherFileHead(password,salt,stream_length);
-        OutputStreamEncrypter target=new OutputStreamEncrypter(concat(password,salt),to);//写入头部
+        OutputStreamEncrypter target=new OutputStreamEncrypter(concat(password,salt),to);
+        sum.addBytes(long2byte(stream_length));//校验和需要的第一部分数据是原文长度
         try {
-            head.writeToStream(to);
+            head.writeToStream(to);//写入头部
             while(from.available()>0&&stream_length>0){//加密并写入数据区
                 stream_length--;
-                target.write(from.read());
+                byte data= (byte) from.read();
+                sum.addByte(data);
+                target.write(data);
             }
+            target.write(sum.getSum());//最后写入校验和
         } catch (IOException e) {
             throw new Exception("加密过程在输入输出时出现异常。",e);
         }
@@ -44,17 +51,23 @@ public class FileEncrypter {
      * @throws Exception 输入输入被中断，比如输入数据格式错误或者提前结束，或者输出流无法写入。
      */
     public static void decrypt(InputStream from,OutputStream to,byte[] password) throws Exception {
-
+        CheckSum sum=new CheckSum();
         CipherFileHead head=new CipherFileHead(password);
         head.readFromStream(from);//读取密文的头部
         byte[] salt=head.getSalt();//得到文件头部储存的盐 用于解密
         long length=head.getLength();
+        sum.addBytes(long2byte(length));//校验和需要的第一部分数据是原文长度
         InputStreamEncrypter source=new InputStreamEncrypter(concat(password,salt),from);
         try {
             while(source.available()>0 && length>0){//读取加密区
                 length--;//计算按照头文件的预计 应该有多少字节被读出来
-                to.write(source.read());
+                byte data= (byte) source.read();
+                sum.addByte(data);
+                to.write(data);
             }
+            byte[] sum2=new byte[16];
+            source.read(sum2);//读取校验和
+            if(!isEqual(sum.getSum(),sum2))throw new CheckSumException("数据解密完成但校验和不正确。");
         } catch (IOException e) {
             throw new Exception("解密过程在输入输出时出现异常。",e);
         }
