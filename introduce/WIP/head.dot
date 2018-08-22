@@ -1,0 +1,3 @@
+digraph random_core{
+    table1[label="aaa|bbb|ccc"]
+}
