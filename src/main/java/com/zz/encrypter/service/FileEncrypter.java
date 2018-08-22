@@ -22,10 +22,11 @@ public class FileEncrypter {
      * @param from 要加密的原始明文
      * @param to 密文要储存到的目标流
      * @param password 用于加密的密码
+     * @param stream_length 输入流数据长度
+     * @param salt 用于加密的盐，可以忽略以生成随机盐，也可以自定义盐
      */
-    public static void encrypt(InputStream from,OutputStream to,byte[] password,long stream_length) throws Exception {
+    public static void encrypt(InputStream from,OutputStream to,byte[] password,long stream_length,byte[] salt) throws Exception {
         CheckSum sum=new CheckSum();
-        byte[] salt=HashService.md5.getRandomHash().getByteArray();//得到随机盐。
         CipherFileHead head=new CipherFileHead(password,salt,stream_length);
         OutputStreamEncrypter target=new OutputStreamEncrypter(concat(password,salt),to);
         sum.addBytes(long2byte(stream_length));//校验和需要的第一部分数据是原文长度
@@ -42,7 +43,10 @@ public class FileEncrypter {
             throw new Exception("加密过程在输入输出时出现异常。",e);
         }
     }
-
+    public static void encrypt(InputStream from,OutputStream to,byte[] password,long stream_length) throws Exception {
+        byte[]salt=HashService.md5.getRandomHash().getByteArray();
+        encrypt(from,to,password,stream_length,salt);
+    }
     /**
      *
      * @param from 要解密的密文
