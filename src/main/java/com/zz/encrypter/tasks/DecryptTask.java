@@ -25,7 +25,7 @@ public class DecryptTask {
         try {
             FileEncrypter.decrypt(new FileInputStream(source), new FileOutputStream(target), password.getBytes("utf-8"));
         } catch (CheckSumException e){
-            throw new Exception("文件 "+source.getAbsolutePath()+"已经解密但校验失败，数据可能已经受损。",e);
+            throw new Exception("文件 "+source.getAbsolutePath()+"已经解密但校验失败，数据可能已经受损。");
         }
     }
     private void decryptDir2Dir(File source, File target, String password) throws Exception {//文件夹到文件夹的加密
@@ -45,7 +45,7 @@ public class DecryptTask {
                             new FileOutputStream(Bash.changeBase(file, source, target)),
                             password.getBytes("utf-8"));
                 }catch (CheckSumException e){
-                    e.printStackTrace();
+                    //e.printStackTrace();
                     System.out.println("\033[31m"+file.getAbsolutePath()+"已经解密但校验失败，数据可能已经受损\033[0m");
                 }
             }

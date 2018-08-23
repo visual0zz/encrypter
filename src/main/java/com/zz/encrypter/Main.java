@@ -9,18 +9,21 @@ import java.io.File;
 import static java.lang.System.exit;
 
 public class Main {
-    public static void main(String[]args) throws Exception {
-        System.out.println(new File(".").getAbsolutePath());
-        if(args.length!=4)erro("参数错误。");
-        if(args[0].equals("encrypt")){
-            doJob(args[1],args[2],args[3],true,false);//加密
-        }else if(args[0].equals("decrypt")){
-            doJob(args[1],args[2],args[3],false,false);//解密
-        }else if(args[0].equals("encrypt!")){
-            doJob(args[1],args[2],args[3],true,true);//强制覆盖加密
-        }else if(args[0].equals("decrypt!")){
-            doJob(args[1],args[2],args[3],false,true);//强制覆盖解密
-        }else erro("没有这个指令: "+args[0]);
+    public static void main(String[]args) {
+        try {
+            if (args.length != 4) erro("参数错误。");
+            if (args[0].equals("e")) {
+                doJob(args[1], args[2], args[3], true, false);//加密
+            } else if (args[0].equals("d")) {
+                doJob(args[1], args[2], args[3], false, false);//解密
+            } else if (args[0].equals("e!")) {
+                doJob(args[1], args[2], args[3], true, true);//强制覆盖加密
+            } else if (args[0].equals("d!")) {
+                doJob(args[1], args[2], args[3], false, true);//强制覆盖解密
+            } else erro("没有这个指令: " + args[0]);
+        }catch (Exception e){
+            erro(e.getMessage());
+        }
     }
 
 
@@ -28,11 +31,12 @@ public class Main {
         System.out.println("\033[31m"+msg+"\033[0m");
         System.out.println("用法: java -jar "+StringAndBasicWork.GetProgramName()+" <command> <fileFrom> <fileTo> <password>");
         System.out.println("命令列表:" +
-                "\nencrypt 加密一个文件或者一个文件夹" +
-                "\ndecrypt 解密一个文件或者文件夹" +
-                "\nencrypt! 加密，遇到已存在文件就覆盖" +
-                "\ndecrypt! 解密，遇到已存在文件就覆盖");
-        exit(0);
+                "\ne 加密一个文件或者一个文件夹" +
+                "\nd 解密一个文件或者文件夹" +
+                "\ne! 加密，遇到已存在文件就覆盖" +
+                "\nd! 解密，遇到已存在文件就覆盖" +
+                "\n\n示例 "+StringAndBasicWork.GetProgramName()+" e! a");
+        exit(1);
     }
 
     public static void doJob(String source,String target,String password,boolean encrypt,boolean force) throws Exception {
