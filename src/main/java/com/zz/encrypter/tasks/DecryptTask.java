@@ -46,7 +46,7 @@ public class DecryptTask {
                             password.getBytes("utf-8"));
                 }catch (CheckSumException e){
                     e.printStackTrace();
-                    System.out.println("\033[31m"+source.getAbsolutePath()+"已经解密但校验失败，数据可能已经受损\033[0m");
+                    System.out.println("\033[31m"+file.getAbsolutePath()+"已经解密但校验失败，数据可能已经受损\033[0m");
                 }
             }
         });
