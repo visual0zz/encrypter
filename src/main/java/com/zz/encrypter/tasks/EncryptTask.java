@@ -4,7 +4,6 @@ import com.zz.encrypter.service.FileEncrypter;
 import com.zz.encrypter.utils.filesystem.Bash;
 import com.zz.encrypter.utils.filesystem.FileTreeTravelManager;
 import com.zz.encrypter.utils.filesystem.FileTreeTraveler;
-import sun.misc.Unsafe;
 
 import java.io.*;
 import java.lang.reflect.Field;

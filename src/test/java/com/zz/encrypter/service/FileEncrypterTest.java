@@ -35,7 +35,7 @@ public void testEncrypt() throws Exception {
     byte[] example;
     File targetFile=new File("test/cipher.txt.zpi");
     FileEncrypter.encrypt(
-            new ByteArrayInputStream(example=new byte[]{0x32,0x31,0x11, (byte) 0x80}),
+            new ByteArrayInputStream(example=new byte[]{0x31,0x32,0x33, (byte) 0x34}),
             new FileOutputStream(targetFile),
             "123".getBytes(),
             4);
