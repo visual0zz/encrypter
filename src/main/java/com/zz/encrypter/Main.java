@@ -28,10 +28,10 @@ public class Main {
         System.out.println("\033[31m"+msg+"\033[0m");
         System.out.println("用法: java -jar "+StringAndBasicWork.GetProgramName()+" <command> <fileFrom> <fileTo> <password>");
         System.out.println("命令列表:" +
-                "\nencrypt" +
-                "\ndecrypt" +
-                "\n!encrypt" +
-                "\n!decrypt");
+                "\nencrypt 加密一个文件或者一个文件夹" +
+                "\ndecrypt 解密一个文件或者文件夹" +
+                "\n!encrypt 加密，遇到已存在文件就覆盖" +
+                "\n!decrypt 解密，遇到已存在文件就覆盖");
         exit(0);
     }
 
