@@ -1,7 +1,11 @@
 package com.zz.encrypter.utils.filesystem;
 
+
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,13 +41,13 @@ public final class FileTreeTravelManager {
      * @param traveler 用于处理每个被遍历到的文件夹和文件的处理器对象
      * @return  返回用于用户自定义功能的字符串列表，这个列表会在遍历过程中反复传给traveler，供其根据情况修改其内容。
      */
-    public List<String> travel(FileTreeTraveler traveler){
+    public List<String> travel(FileTreeTraveler traveler) throws Exception {
         this.traveler=traveler;//保存traveler
         list=new ArrayList<>();
         travelOneLayer(rootFolder,0);
         return list;
     }
-    private void travelOneLayer(File file,int level_count){
+    private void travelOneLayer(File file,int level_count) throws Exception {
         if(file.exists()){//如果文件存在
             if(file.isDirectory()){//如果是文件夹
                 if(traveler.shouldTravelIntoFolder(level_count,file)) {
@@ -60,4 +64,5 @@ public final class FileTreeTravelManager {
             }
         }
     }
+
 }
