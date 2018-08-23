@@ -4,12 +4,14 @@ Encrypter
 =========
 一个加密工具
 
-用法: java -jar encrypter.jar <command> <fileFrom> <fileTo> <password>
+用法:
+>java -jar encrypter.jar <command> <fileFrom> <fileTo> <password>
+
 命令列表:
-e 加密一个文件或者一个文件夹
-d 解密一个文件或者文件夹
-e! 加密，遇到已存在文件就覆盖
-d! 解密，遇到已存在文件就覆盖
+* e 加密一个文件或者一个文件夹
+* d 解密一个文件或者文件夹
+* e! 加密，遇到已存在文件就覆盖
+* d! 解密，遇到已存在文件就覆盖
 
 当加密文件夹时，并不是像普通加密工具一样把文件夹打包，
 而是每个文件保持位置不变和文件名不变，每个文件分别加密输出到目标文件夹。
