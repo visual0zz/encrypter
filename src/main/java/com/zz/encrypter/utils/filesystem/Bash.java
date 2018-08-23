@@ -1,13 +1,16 @@
 package com.zz.encrypter.utils.filesystem;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.FileAlreadyExistsException;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static java.lang.System.exit;
 
-public class Bash {
+public final class Bash {
     /**
      * @apiNote 函数行为和linux指令touch基本一致，唯一区别是可以自动建立沿途的所有文件夹。
      * @param file 要新建的文件路径，
@@ -25,6 +28,13 @@ public class Bash {
             }
         }
     }
+
+    /**
+     * 新建文件夹,与linux指令不同的是，可以沿途建立所有上级文件夹。
+     * @param file 要建立的文件夹路径
+     * @throws FileAlreadyExistsException 要建立的文件夹路径已经被一个文件占据
+     * @throws AccessDeniedException 没有足够的权限来进行操作
+     */
     public static void mkdir(File file) throws FileAlreadyExistsException, AccessDeniedException {
         if(file.exists()){
             if(file.isDirectory())
@@ -39,7 +49,7 @@ public class Bash {
         }else {
             mkdir(parent);//如果不允许就先建立上级文件夹再建立本文件夹。
         }
-        if(!file.mkdir()) throw new AccessDeniedException("无法操作"+file.getAbsolutePath());
+        if(!file.mkdir()) throw new AccessDeniedException("无法操作 "+file.getAbsolutePath());
 
 
     }
@@ -64,4 +74,37 @@ public class Bash {
         }
         return new File(filepath.replace(root1, root2));
     }
+
+    /**
+     *
+     * @param regex 用于搜索的正则表达式
+     * @param file 用于匹配是数据来源
+     * @return 返回所有file中能找到匹配regex的子字符串的行。
+     */
+    public static ArrayList<String> grep(String regex, InputStream file){
+        Pattern pattern=Pattern.compile(regex);
+        Scanner in=new Scanner(file);
+        ArrayList<String> result=new ArrayList<>();
+        while (in.hasNextLine()){//循环遍历文件的每一行，
+            String str=in.nextLine();
+            Matcher matcher=pattern.matcher(str);
+            if(matcher.find()){//如果找到了
+                result.add(str);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 判断一个字符串是否符合regex的描述
+     * @param regex 正则表达式
+     * @param str 要匹配的字符串
+     * @return 是否匹配
+     */
+    public boolean match(String regex,String str){
+        Pattern pattern=Pattern.compile(regex);
+        Matcher m=pattern.matcher(str);
+        return m.matches();
+    }
+
 }
