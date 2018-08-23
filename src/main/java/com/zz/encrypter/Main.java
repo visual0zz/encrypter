@@ -35,7 +35,8 @@ public class Main {
                 "\nd 解密一个文件或者文件夹" +
                 "\ne! 加密，遇到已存在文件就覆盖" +
                 "\nd! 解密，遇到已存在文件就覆盖" +
-                "\n\n示例 "+StringAndBasicWork.GetProgramName()+" e! a");
+                "\n\n示例 "+StringAndBasicWork.GetProgramName()+" e! a/ b 123456" +
+                "\n 将文件夹a中的每个文件用密码123456加密后放入文件夹b中的对应位置");
         exit(1);
     }
 
