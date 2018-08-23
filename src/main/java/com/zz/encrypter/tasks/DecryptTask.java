@@ -1,5 +1,7 @@
 package com.zz.encrypter.tasks;
 
+import com.zz.encrypter.service.CheckSum;
+import com.zz.encrypter.service.CheckSumException;
 import com.zz.encrypter.service.FileEncrypter;
 import com.zz.encrypter.utils.filesystem.Bash;
 import com.zz.encrypter.utils.filesystem.FileTreeTravelManager;
@@ -20,7 +22,11 @@ public class DecryptTask {
 }
 
     private void decryptOne2One(File source, File target, String password) throws Exception {//一个文件对一个文件的加密
-        FileEncrypter.decrypt(new FileInputStream(source),new FileOutputStream(target),password.getBytes("utf-8"));
+        try {
+            FileEncrypter.decrypt(new FileInputStream(source), new FileOutputStream(target), password.getBytes("utf-8"));
+        } catch (CheckSumException e){
+            throw new Exception("文件 "+source.getAbsolutePath()+"已经解密但校验失败，数据可能已经受损。",e);
+        }
     }
     private void decryptDir2Dir(File source, File target, String password) throws Exception {//文件夹到文件夹的加密
         FileTreeTravelManager travelManager=new FileTreeTravelManager(source);
@@ -33,10 +39,15 @@ public class DecryptTask {
 
             @Override
             public void travelFile(int layer_level, File file, List<String> result) throws Exception {
-                FileEncrypter.decrypt(
-                        new FileInputStream(file),
-                        new FileOutputStream(Bash.changeBase(file,source,target)),
-                        password.getBytes("utf-8"));
+                try {
+                    FileEncrypter.decrypt(
+                            new FileInputStream(file),
+                            new FileOutputStream(Bash.changeBase(file, source, target)),
+                            password.getBytes("utf-8"));
+                }catch (CheckSumException e){
+                    e.printStackTrace();
+                    System.out.println("\033[31m"+source.getAbsolutePath()+"已经解密但校验失败，数据可能已经受损\033[0m");
+                }
             }
         });
     }
